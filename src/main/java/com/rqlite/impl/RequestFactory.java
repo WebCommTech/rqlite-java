@@ -1,13 +1,17 @@
 package com.rqlite.impl;
 
-import com.google.api.client.http.*;
+import java.io.IOException;
+
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.json.JsonHttpContent;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-
-import java.io.IOException;
 
 public class RequestFactory {
     static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -39,12 +43,12 @@ public class RequestFactory {
         });
     }
 
-    public ExecuteRequest buildExecuteRequest(String[] stmts) throws IOException {
+    public ExecuteRequest buildExecuteRequest(Object[] stmts) throws IOException {
         HttpRequest request = this.buildPostRequest(this.executeUrl, stmts);
         return new ExecuteRequest(request);
     }
 
-    public QueryRequest buildQueryRequest(String[] stmts) throws IOException {
+    public QueryRequest buildQueryRequest(Object[] stmts) throws IOException {
         HttpRequest request = this.buildPostRequest(this.queryUrl, stmts);
         return new QueryRequest(request);
     }
@@ -54,7 +58,7 @@ public class RequestFactory {
         return new PingRequest(request);
     }
 
-    private HttpRequest buildPostRequest(GenericUrl url, String[] stmts) throws IOException {
+    private HttpRequest buildPostRequest(GenericUrl url, Object[] stmts) throws IOException {
         HttpRequest request = this.requestFactory.buildPostRequest(url, new JsonHttpContent(JSON_FACTORY, stmts));
         return request.setParser(new JsonObjectParser(JSON_FACTORY));
     }

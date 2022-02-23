@@ -1,5 +1,14 @@
 package com.rqlite.impl;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -11,15 +20,6 @@ import com.rqlite.dto.ExecuteResults;
 import com.rqlite.dto.GenericResults;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class RqliteImpl implements Rqlite {
 
@@ -61,7 +61,7 @@ public class RqliteImpl implements Rqlite {
         }
     }
 
-    private GenericResults tryOtherPeers(GenericRequest request, String[] stmts) throws NodeUnavailableException {
+    private GenericResults tryOtherPeers(GenericRequest request, Object[] stmts) throws NodeUnavailableException {
         // Cycle through the list of nodes in the config file.
         long end = System.currentTimeMillis() + timeoutDelay;
         if (peers != null) {
@@ -90,11 +90,12 @@ public class RqliteImpl implements Rqlite {
         throw new NodeUnavailableException("Could not connect to rqlite node.  Please check that the node is online and that your config files point to the correct address.");
     }
 
-    public QueryResults Query(String[] stmts, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException {
+    public QueryResults Query(Object[] stmts, boolean tx, ReadConsistencyLevel lvl) throws NodeUnavailableException {
         QueryRequest request;
 
         try {
             request = this.requestFactory.buildQueryRequest(stmts);
+    		System.out.println("request " + request.getBody());
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -116,7 +117,7 @@ public class RqliteImpl implements Rqlite {
         return this.Query(new String[] { s }, false, lvl);
     }
 
-    public ExecuteResults Execute(String[] stmts, boolean tx) throws NodeUnavailableException {
+    public ExecuteResults Execute(Object[] stmts, boolean tx) throws NodeUnavailableException {
         ExecuteRequest request;
         try {
             request = this.requestFactory.buildExecuteRequest(stmts);
