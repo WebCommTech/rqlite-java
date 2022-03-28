@@ -95,7 +95,7 @@ public class RqliteImpl implements Rqlite {
 
         try {
             request = this.requestFactory.buildQueryRequest(stmts);
-    		System.out.println("RqliteImpl Query request " + request.getBody());
+//    		System.out.println("RqliteImpl Query request " + request.getBody());
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -121,7 +121,7 @@ public class RqliteImpl implements Rqlite {
         ExecuteRequest request;
         try {
             request = this.requestFactory.buildExecuteRequest(stmts);
-    		System.out.println("RqliteImpl Execute request " + request.getBody());
+//    		System.out.println("RqliteImpl Execute request " + request.getBody());
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
