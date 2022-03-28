@@ -21,6 +21,9 @@ import com.rqlite.dto.GenericResults;
 import com.rqlite.dto.Pong;
 import com.rqlite.dto.QueryResults;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RqliteImpl implements Rqlite {
 
     static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -95,7 +98,7 @@ public class RqliteImpl implements Rqlite {
 
         try {
             request = this.requestFactory.buildQueryRequest(stmts);
-//    		System.out.println("RqliteImpl Query request " + request.getBody());
+            log.debug("RqliteImpl Query request " + request.getBody());
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -121,7 +124,7 @@ public class RqliteImpl implements Rqlite {
         ExecuteRequest request;
         try {
             request = this.requestFactory.buildExecuteRequest(stmts);
-//    		System.out.println("RqliteImpl Execute request " + request.getBody());
+            log.debug("RqliteImpl Execute request " + request.getBody());
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
