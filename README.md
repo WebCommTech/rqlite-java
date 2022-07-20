@@ -1,4 +1,7 @@
 # rqlite-java
+
+
+
 [![Google Group](https://img.shields.io/badge/Google%20Group--blue.svg)](https://groups.google.com/group/rqlite)
 
 This is a basic Java client library for [rqlite](https://github.com/rqlite/rqlite). rqlite is a lightweight, distributed relational database, which uses SQLite as its storage engine. Significant development and testing remains, and pull requests are welcome.
